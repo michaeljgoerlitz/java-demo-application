@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
@@ -25,6 +26,7 @@ public class MainView extends VerticalLayout {
     public MainView(PersonRepository repository) {
         this.repository = repository;
 
+        grid.setColumns("firstName", "lastName", "email");
         add(getForm(), grid);
 
 //        var button = new Button("Click me");
@@ -40,7 +42,11 @@ public class MainView extends VerticalLayout {
     private Component getForm() {
         var layout = new HorizontalLayout();
         layout.setAlignItems(Alignment.BASELINE);
-        layout.add(firstName, lastName, email);
+
+        var addButton = new Button("Add");
+        addButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        layout.add(firstName, lastName, email, addButton);
 
         return layout;
     }
