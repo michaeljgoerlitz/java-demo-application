@@ -11,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.router.Route;
 
 @Route("")
@@ -28,6 +29,7 @@ public class MainView extends VerticalLayout {
 
         grid.setColumns("firstName", "lastName", "email");
         add(getForm(), grid);
+        refreshGrid();
 
 //        var button = new Button("Click me");
 //        var textField = new TextField();
@@ -48,6 +50,25 @@ public class MainView extends VerticalLayout {
 
         layout.add(firstName, lastName, email, addButton);
 
+        // below method automatically binds fields in Person with form
+        // since they each have the same name (firstName, lastName, email)
+        binder.bindInstanceFields(this);
+
+        addButton.addClickListener(click -> {
+            try {
+                var person = new Person();
+                binder.writeBean(person);
+                repository.save(person);
+                refreshGrid();
+            } catch (ValidationException e) {
+
+            }
+        });
+
         return layout;
+    }
+
+    private void refreshGrid() {
+        grid.setItems(repository.findAll());
     }
 }
