@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
@@ -24,6 +25,8 @@ public class MainView extends VerticalLayout {
     public MainView(PersonRepository repository) {
         this.repository = repository;
 
+        add(getForm(), grid);
+
 //        var button = new Button("Click me");
 //        var textField = new TextField();
 //        add(new HorizontalLayout(textField, button));
@@ -32,5 +35,13 @@ public class MainView extends VerticalLayout {
 //           add(new Paragraph("Hello, " + textField.getValue()));
 //           textField.clear();
 //        });
+    }
+
+    private Component getForm() {
+        var layout = new HorizontalLayout();
+        layout.setAlignItems(Alignment.BASELINE);
+        layout.add(firstName, lastName, email);
+
+        return layout;
     }
 }
