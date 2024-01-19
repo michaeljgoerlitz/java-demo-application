@@ -11,14 +11,18 @@ import com.vaadin.flow.router.Route;
 @Route("")
 public class MainView extends VerticalLayout {
 
-    public MainView() {
-        var button = new Button("Click me");
-        var textField = new TextField();
-        add(new HorizontalLayout(textField, button));
+    private PersonRepository repository;
 
-        button.addClickListener(e -> {
-           add(new Paragraph("Hello, " + textField.getValue()));
-           textField.clear();
-        });
+    public MainView(PersonRepository repository) {
+        this.repository = repository;
+
+//        var button = new Button("Click me");
+//        var textField = new TextField();
+//        add(new HorizontalLayout(textField, button));
+//
+//        button.addClickListener(e -> {
+//           add(new Paragraph("Hello, " + textField.getValue()));
+//           textField.clear();
+//        });
     }
 }
