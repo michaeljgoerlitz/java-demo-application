@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
@@ -30,15 +31,6 @@ public class MainView extends VerticalLayout {
         grid.setColumns("firstName", "lastName", "email");
         add(getForm(), grid);
         refreshGrid();
-
-//        var button = new Button("Click me");
-//        var textField = new TextField();
-//        add(new HorizontalLayout(textField, button));
-//
-//        button.addClickListener(e -> {
-//           add(new Paragraph("Hello, " + textField.getValue()));
-//           textField.clear();
-//        });
     }
 
     private Component getForm() {
@@ -46,6 +38,7 @@ public class MainView extends VerticalLayout {
         layout.setAlignItems(Alignment.BASELINE);
 
         var addButton = new Button("Add");
+        addButton.addClickShortcut(Key.ENTER);
         addButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         layout.add(firstName, lastName, email, addButton);
@@ -59,9 +52,10 @@ public class MainView extends VerticalLayout {
                 var person = new Person();
                 binder.writeBean(person);
                 repository.save(person);
+                binder.readBean(new Person());
                 refreshGrid();
             } catch (ValidationException e) {
-
+                //
             }
         });
 
